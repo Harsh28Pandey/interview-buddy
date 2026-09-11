@@ -24,25 +24,47 @@ axiosInstance.interceptors.request.use(
     }
 )
 
-// response interceptor
 axiosInstance.interceptors.response.use(
     (response) => {
         return response
     },
     (error) => {
-        // handle common errors globally
         if (error.response) {
+            console.log("Status:", error.response.status)
+            console.log("Data:", error.response.data)
+            console.log("Message:", error.response.data?.message)
+
             if (error.response.status === 401) {
-                // redirect to login page
                 window.location.href = "/"
-            } else if (error.response.status) {
-                console.log("Server Error. Please Try Again Later.")
             }
         } else if (error.code === "ECONNABORTED") {
             console.log("Request Timeout. Please Try Again.")
+        } else {
+            console.log("Network Error:", error.message)
         }
         return Promise.reject(error)
     }
 )
+
+// response interceptor
+// axiosInstance.interceptors.response.use(
+//     (response) => {
+//         return response
+//     },
+//     (error) => {
+//         // handle common errors globally
+//         if (error.response) {
+//             if (error.response.status === 401) {
+//                 // redirect to login page
+//                 window.location.href = "/"
+//             } else if (error.response.status) {
+//                 console.log("Server Error. Please Try Again Later.")
+//             }
+//         } else if (error.code === "ECONNABORTED") {
+//             console.log("Request Timeout. Please Try Again.")
+//         }
+//         return Promise.reject(error)
+//     }
+// )
 
 export default axiosInstance
