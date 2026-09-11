@@ -10,7 +10,7 @@ const Navbar = () => {
                 {/* Logo / Brand */}
                 <Link to="/dashboard" className="group relative">
                     <h2 className="text-lg md:text-xl font-extrabold bg-linear-to-r from-orange-600 via-orange-500 to-amber-500 bg-clip-text text-transparent tracking-tight transition-all duration-300 group-hover:tracking-wide">
-                        Interview Prep AI
+                        Interview Buddy
                     </h2>
 
                     {/* underline glow */}
