@@ -1,9 +1,12 @@
-const { GoogleGenAI } = require("@google/genai")
+const OpenAI = require("openai")
 const { conceptExplainPrompt, questionAnswerPrompt } = require("../utils/prompts.js")
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
+const ai = new OpenAI({
+    apiKey: process.env.GROQ_API_KEY,
+    baseURL: "https://api.groq.com/openai/v1",
+})
 
-// @desc  generate interview questions and answers using gemini
+// @desc  generate interview questions and answers using groq
 // @route  POST /api/ai/generate-questions
 // @access  private
 const generateInterviewQuestions = async (req, res) => {
@@ -18,20 +21,18 @@ const generateInterviewQuestions = async (req, res) => {
 
         const prompt = questionAnswerPrompt(role, experience, topicsToFocus, numberOfQuestions)
 
-        const response = await ai.models.generateContent({
-            model: "models/gemini-flash-latest",
-            contents: prompt,
+        const response = await ai.chat.completions.create({
+            model: "openai/gpt-oss-120b",
+            messages: [{ role: "user", content: prompt }],
         })
 
-        let rawText = response.text
+        let rawText = response.choices[0].message.content
 
-        // clean it: remove ```json and ``` from beginning and end
         const cleanedText = rawText
-            .replace(/^```json\s*/, "")  // remove starting ```json
-            .replace(/```$/, "")  // remove ending ```
-            .trim()  // remove extra spaces
+            .replace(/^```json\s*/, "")
+            .replace(/```$/, "")
+            .trim()
 
-        // now safe to parse
         const data = JSON.parse(cleanedText)
 
         res.status(200).json(data)
@@ -59,20 +60,18 @@ const generateConceptExplanation = async (req, res) => {
 
         const prompt = conceptExplainPrompt(question)
 
-        const response = await ai.models.generateContent({
-            model: "models/gemini-flash-latest",
-            contents: prompt
+        const response = await ai.chat.completions.create({
+            model: "openai/gpt-oss-120b",
+            messages: [{ role: "user", content: prompt }],
         })
 
-        let rawText = response.text
+        let rawText = response.choices[0].message.content
 
-        // clean it: remove ```json and ``` from beginning and end
         const cleanedText = rawText
-            .replace(/^```json\s*/, "")  // remove starting ```json
-            .replace(/```$/, "")  // remove ending ```
-            .trim()  // remove extra spaces
+            .replace(/^```json\s*/, "")
+            .replace(/```$/, "")
+            .trim()
 
-        // now safe to parse
         const data = JSON.parse(cleanedText)
 
         res.status(200).json(data)
