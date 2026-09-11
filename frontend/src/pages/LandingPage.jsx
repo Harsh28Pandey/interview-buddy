@@ -39,7 +39,7 @@ const LandingPage = () => {
                     {/* header */}
                     <header className="flex items-center justify-between mb-12 animate-fade-in">
                         <h1 className="text-2xl font-bold tracking-tight text-black">
-                            Interview Prep AI
+                            Interview Buddy
                         </h1>
 
                         {/* <button
@@ -177,7 +177,7 @@ const LandingPage = () => {
                     {/* heading */}
                     <div className="text-center mb-20 animate-fade-in">
                         <h3 className="text-3xl md:text-4xl font-semibold mb-4">
-                            How Interview Prep AI Works 🚀
+                            How Interview Buddy Works 🚀
                         </h3>
                         <p className="max-w-2xl mx-auto text-gray-700 text-base md:text-lg">
                             A simple, smart, and structured way to prepare for interviews —
