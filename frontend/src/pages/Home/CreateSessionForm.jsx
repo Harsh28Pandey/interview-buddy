@@ -120,7 +120,7 @@ const CreateSessionForm = () => {
                 {error && <p className='text-red-600 text-xs pb-2.5'>{error}</p>}
 
                 <button type='submit' className='btn-primary w-full mt-2 rounded-3xl transition-transform duration-150 ease-out hover:scale-[1.02] active:scale-[0.96]' disabled={isLoading}>
-                    {!isLoading && <SpinnerLoader />} Create Session
+                    {isLoading && <SpinnerLoader />} Create Session
                 </button>
 
             </form>
